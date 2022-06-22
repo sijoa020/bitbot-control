@@ -19,10 +19,28 @@ radio.onReceivedNumber(function (receivedNumber) {
     }
 })
 radio.onReceivedValue(function (name, value) {
-	
+    if (name == "x") {
+        Left_gaz = value / 10 * -1
+        Right_gaz = value / 10
+    } else if (name == "y") {
+        Left_gaz += value / 10
+        Right_gaz += value / 10
+        if (Left_gaz < 0) {
+            bitbot.move(BBMotor.Left, BBDirection.Reverse, Math.abs(Left_gaz))
+        } else {
+            bitbot.move(BBMotor.Left, BBDirection.Forward, Math.abs(Left_gaz))
+        }
+        if (Right_gaz < 0) {
+            bitbot.move(BBMotor.Right, BBDirection.Reverse, Math.abs(Right_gaz))
+        } else {
+            bitbot.move(BBMotor.Right, BBDirection.Forward, Math.abs(Right_gaz))
+        }
+    }
 })
+let Right_gaz = 0
+let Left_gaz = 0
 let Mode = 0
-Mode = 2
+Mode = 1
 radio.setGroup(208)
 basic.forever(function () {
 	
